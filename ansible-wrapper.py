@@ -3,9 +3,17 @@
 python wrapper for executing ansible and passing the host-pattern to
 your dynamic inventory script as an argument
 
+have your dynamic inventory script read the env vars
+that are set by this script to scope the response to
+only the hosts you want to work on.
+
 in your .bashrc put:
 alias ansible="/path/to/this/script ansible"
 alias ansible-playbook="/path/to/this/script ansible-playbook"
+
+todo:
+    exit cleanly on ctrl-c
+    better conditional logic
 '''
 
 import sys
@@ -14,7 +22,6 @@ import shlex
 from subprocess import call
 
 
-# determine if you are calling ansible or ansible-playbook
 def ansible(args):
     try:
         os.environ['ANSIBLE_QUERY_TYPE'] = 'host-pattern'
