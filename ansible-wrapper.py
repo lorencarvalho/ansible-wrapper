@@ -51,6 +51,9 @@ def ansible_playbook(args):
 
 def main():
     args = sys.argv
+    # check if any args were passed (or --version or what-have-you)
+    if len(args) >=2:
+        os.execvp(args[1], shlex.split(' '.join(args[1:])))
     # some basic envs
     os.environ['ANSIBLE_HOST_KEY_CHECKING'] = "False"
     os.environ['ANSIBLE_SSH_ARGS'] = ""
