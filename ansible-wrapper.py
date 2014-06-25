@@ -19,7 +19,6 @@ todo:
 import sys
 import os
 import shlex
-from subprocess import Popen as call
 
 def which(b):
     for path in os.environ['PATH'].split(os.pathsep):
