@@ -19,7 +19,7 @@ todo:
 import sys
 import os
 import shlex
-from subprocess import call
+from subprocess import Popen as call
 
 def which(b):
     for path in os.environ['PATH'].split(os.pathsep):
@@ -51,6 +51,9 @@ def ansible_playbook(args):
 
 def main():
     args = sys.argv
+    # some basic envs
+    os.environ['ANSIBLE_HOST_KEY_CHECKING'] = "False"
+    os.environ['ANSIBLE_SSH_ARGS'] = ""
     # check if ansible is installed
     if which(args[1]):
         try:
@@ -65,8 +68,8 @@ def main():
             elif args[1] == 'ansible-playbook':
                 ansible_playbook(args)
 
-            # execute!
-            call(shlex.split(' '.join(args[1:])))
+            # exec!
+            os.execvp(args[1], shlex.split(' '.join(args[1:])))
         except KeyboardInterrupt:
             sys.exit('got ctrl-c')
 
