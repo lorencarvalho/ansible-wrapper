@@ -45,7 +45,6 @@ def ansible_playbook(args):
 
 def main():
     parser = argparse.ArgumentParser()
-    print 'startin'
     args = parser.parse_known_args()
     args = args[1]
 
