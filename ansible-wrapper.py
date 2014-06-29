@@ -68,7 +68,6 @@ def main():
             ansible_playbook(args)
 
         # exec!
-        a_args = ' '.join(args[1:])
         os.execvp(args[0], args)
     except KeyboardInterrupt:
         sys.exit('got ctrl-c')
