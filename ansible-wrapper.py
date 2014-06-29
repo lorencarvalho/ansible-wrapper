@@ -16,20 +16,15 @@ todo:
     better conditional logic
 '''
 
+import argparse
 import sys
 import os
-import shlex
-
-def which(b):
-    for path in os.environ['PATH'].split(os.pathsep):
-        if b in os.listdir(path):
-            return True
 
 
 def ansible(args):
     try:
         os.environ['ANSIBLE_QUERY_TYPE'] = 'host-pattern'
-        os.environ['ANSIBLE_QUERY'] = args[2]
+        os.environ['ANSIBLE_QUERY'] = args[1]
     except:
         pass
 
@@ -37,7 +32,7 @@ def ansible(args):
 def ansible_playbook(args):
     playbooks = []
     try:
-        for arg in args[2:]:
+        for arg in args[1:]:
             if arg.startswith('-'):
                 break
             else:
@@ -49,31 +44,34 @@ def ansible_playbook(args):
 
 
 def main():
-    args = sys.argv
+    parser = argparse.ArgumentParser()
+    print 'startin'
+    args = parser.parse_known_args()
+    args = args[1]
+
     # check if any args were passed (or --version or what-have-you)
     if len(args) <=2:
-        os.execvp(args[1], shlex.split(' '.join(args[1:])))
+        os.execvp(args[0], args)
     # some basic envs
     os.environ['ANSIBLE_HOST_KEY_CHECKING'] = "False"
     os.environ['ANSIBLE_SSH_ARGS'] = ""
-    # check if ansible is installed
-    if which(args[1]):
-        try:
-            # move args back until host-pattern or playbooks are found
-            while args[2].startswith('-'):
-                pass_back = [args.pop(2), args.pop(2)]
-                args = args + pass_back
+    try:
+        # move args back until host-pattern or playbooks are found
+        while args[1].startswith('-'):
+            pass_back = [args.pop(1), args.pop(1)]
+            args = args + pass_back
 
-            # set appropriate env vars
-            if args[1] == 'ansible':
-                ansible(args)
-            elif args[1] == 'ansible-playbook':
-                ansible_playbook(args)
+        # set appropriate env vars
+        if args[0] == 'ansible':
+            ansible(args)
+        elif args[0] == 'ansible-playbook':
+            ansible_playbook(args)
 
-            # exec!
-            os.execvp(args[1], shlex.split(' '.join(args[1:])))
-        except KeyboardInterrupt:
-            sys.exit('got ctrl-c')
+        # exec!
+        a_args = ' '.join(args[1:])
+        os.execvp(args[0], args)
+    except KeyboardInterrupt:
+        sys.exit('got ctrl-c')
 
 
 if __name__ == '__main__':
