@@ -23,7 +23,7 @@ create an alias for the wrapper
     alias ansible-playbook="/path/to/ansible-wrapper.py ansible-playbook"
 
 Notice there is a unique alias for `ansible` and `ansible-playbook`.
-If you invoke `ansible`, the wrapper will set the environment varialbe "ANSIBLE_QUERY" to the host-pattern you supplied to ansible, while also setting "ANSIBLE_QUERY_TYPE" to 'host-pattern'. Make sure your dynamic inventory script reads these vars.
+If you invoke `ansible`, the wrapper will set the environment variable "ANSIBLE_QUERY" to the host-pattern you supplied to ansible, while also setting "ANSIBLE_QUERY_TYPE" to 'host-pattern'. Make sure your dynamic inventory script reads these vars.
 
 for example: `ansible %prod.service -m ping` will set `ANSIBLE_QUERY="%prod.service"` and `ANSIBLE_QUERY_TYPE="host-pattern"`
 
