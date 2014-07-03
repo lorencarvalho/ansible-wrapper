@@ -56,9 +56,14 @@ def main():
     os.environ['ANSIBLE_SSH_ARGS'] = ""
     try:
         # move args back until host-pattern or playbooks are found
+        allowed_first_args = ['-h', '-v', '-K', '-k', '-C', '-o', '-S', '-s']
         while args[1].startswith('-'):
-            pass_back = [args.pop(1), args.pop(1)]
-            args = args + pass_back
+            if len(args) % 2 == 0:
+                pass_back = [args.pop(1), args.pop(1)]
+                args = args + pass_back
+            elif args[1] in allowed_first_args:
+                pass_back = [args.pop(1)]
+                args = args + pass_back
 
         # set appropriate env vars
         if args[0] == 'ansible':
