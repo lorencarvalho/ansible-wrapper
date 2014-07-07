@@ -13,7 +13,6 @@ alias ansible-playbook="/path/to/this/script ansible-playbook"
 '''
 
 import argparse
-import sys
 import os
 
 
@@ -45,7 +44,9 @@ def main():
     args = args[1]
 
     # check if any args were passed (or --version or what-have-you)
-    if len(args) <=2:
+    if not args:
+        raise SystemExit
+    elif len(args) <=2:
         os.execvp(args[0], args)
     # some basic envs
     os.environ['ANSIBLE_HOST_KEY_CHECKING'] = "False"
@@ -70,7 +71,7 @@ def main():
         # exec!
         os.execvp(args[0], args)
     except KeyboardInterrupt:
-        sys.exit('got ctrl-c')
+        raise SystemExit
 
 
 if __name__ == '__main__':
