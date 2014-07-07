@@ -10,10 +10,6 @@ only the hosts you want to work on.
 in your .bashrc put:
 alias ansible="/path/to/this/script ansible"
 alias ansible-playbook="/path/to/this/script ansible-playbook"
-
-todo:
-    exit cleanly on ctrl-c
-    better conditional logic
 '''
 
 import argparse
