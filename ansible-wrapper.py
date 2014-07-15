@@ -43,14 +43,13 @@ def main():
     args = parser.parse_known_args()
     args = args[1]
 
-    # check if any args were passed (or --version or what-have-you)
     if not args:
         raise SystemExit
-    elif len(args) <=2:
-        os.execvp(args[0], args)
+
     # some basic envs
     os.environ['ANSIBLE_HOST_KEY_CHECKING'] = "False"
     os.environ['ANSIBLE_SSH_ARGS'] = ""
+
     try:
         # move args back until host-pattern or playbooks are found
         allowed_first_args = ['-h', '-v', '-K', '-k', '-C', '-o', '-S', '-s']
