@@ -45,10 +45,8 @@ def main():
 
     if not args:
         raise SystemExit
-
-    # some basic envs
-    os.environ['ANSIBLE_HOST_KEY_CHECKING'] = "False"
-    os.environ['ANSIBLE_SSH_ARGS'] = ""
+    elif len(args) == 1:
+        os.execvp(args[0], args)
 
     try:
         # move args back until host-pattern or playbooks are found
