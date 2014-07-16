@@ -45,14 +45,17 @@ def main():
 
     if not args:
         raise SystemExit
-    elif len(args) == 1:
+    elif len(args[1:]) == 1:
         os.execvp(args[0], args)
+
+    print args
 
     try:
         # move args back until host-pattern or playbooks are found
         allowed_first_args = ['-h', '-v', '-K', '-k', '-C', '-o', '-S', '-s']
         while args[1].startswith('-'):
-            if len(args) % 2 == 0:
+            print args
+            if len(args[1:]) % 2 == 0:
                 pass_back = [args.pop(1), args.pop(1)]
                 args = args + pass_back
             elif args[1] in allowed_first_args:
