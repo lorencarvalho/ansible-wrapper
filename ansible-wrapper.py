@@ -48,8 +48,6 @@ def main():
     elif len(args[1:]) == 1:
         os.execvp(args[0], args)
 
-    print args
-
     try:
         # move args back until host-pattern or playbooks are found
         allowed_first_args = ['-h', '-v', '-K', '-k', '-C', '-o', '-S', '-s']
