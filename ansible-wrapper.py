@@ -45,7 +45,7 @@ def main():
 
     if not args:
         raise SystemExit
-    elif len(args[1:]) == 1:
+    elif len(args) == 1:
         os.execvp(args[0], args)
 
     try:
